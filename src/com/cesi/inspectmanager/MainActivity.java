@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
 		Bundle bundle = getIntent().getExtras();
 		Informations userinfo = (Informations) bundle
 				.getSerializable("userinfo");
-		((TextView)findViewById(R.id.textView1)).setText("Hello"+userinfo.name);
+		((TextView)findViewById(R.id.textView1)).setText("Hello! "+userinfo.userName);
 		writecard=(Button) findViewById(R.id.writecard);
 		uoloadpic=(Button) findViewById(R.id.uoloadpic);
 		writecard.setOnClickListener(new OnClickListener() {
