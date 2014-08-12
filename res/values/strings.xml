@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MobileInspectManager</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="submit">登录</string>
+    <string name="username">用户名</string>
+    <string name="showpasswords">显示密码</string>
+    <string name="passwords">密码</string>
+    <string name="LOGIN_SECURITY_CHECK">http://www.cseicms.com/inspectManagement/j_spring_cas_security_check</string>
+    <string name="USER_GETIMF">http://www.cseicms.com/inspectManagement/rs/inspectUser/currentUser</string>
+    <string name="writecard">写卡</string>
+    <string name="uploadpic">上传图片</string>
+    <string name="title_activity_write_card">WriteCardActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_upload_pic">UploadPicActivity</string>
+
+</resources>
