@@ -14,33 +14,42 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
+        public static final int cancel=0x7f060008;
+        public static final int imageView1=0x7f06000a;
         public static final int passwords=0x7f060003;
         public static final int show=0x7f060005;
         public static final int submit=0x7f060004;
+        public static final int take=0x7f06000b;
         public static final int textView1=0x7f060001;
         public static final int textView2=0x7f060000;
         public static final int uoloadpic=0x7f060007;
+        public static final int upload=0x7f060009;
         public static final int username=0x7f060002;
         public static final int writecard=0x7f060006;
     }
     public static final class layout {
         public static final int activity_login=0x7f030000;
         public static final int activity_main=0x7f030001;
-        public static final int activity_upload_pic=0x7f030002;
-        public static final int activity_write_card=0x7f030003;
+        public static final int activity_show=0x7f030002;
+        public static final int activity_upload_pic=0x7f030003;
+        public static final int activity_write_card=0x7f030004;
     }
     public static final class string {
         public static final int LOGIN_SECURITY_CHECK=0x7f040007;
         public static final int USER_GETIMF=0x7f040008;
         public static final int app_name=0x7f040000;
+        public static final int cancel=0x7f040011;
         public static final int hello_world=0x7f04000c;
         public static final int passwords=0x7f040006;
         public static final int showpasswords=0x7f040005;
         public static final int submit=0x7f040003;
+        public static final int take=0x7f04000e;
         public static final int title_activity_login=0x7f040001;
         public static final int title_activity_main=0x7f040002;
+        public static final int title_activity_show=0x7f04000f;
         public static final int title_activity_upload_pic=0x7f04000d;
         public static final int title_activity_write_card=0x7f04000b;
+        public static final int upload=0x7f040010;
         public static final int uploadpic=0x7f04000a;
         public static final int username=0x7f040004;
         public static final int writecard=0x7f040009;
