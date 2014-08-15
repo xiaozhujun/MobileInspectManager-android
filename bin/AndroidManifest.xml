@@ -24,9 +24,10 @@
 
     <application
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:hardwareAccelerated="false">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" >
@@ -49,9 +50,13 @@
             android:label="@string/title_activity_upload_pic" >
         </activity>
         <activity
-            android:name=".ShowActivity"
+            android:name=".ViaCameraActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:label="@string/title_activity_show" >
+            android:label="@string/title_activity_via_camera" >
+        </activity>
+        <activity
+            android:name=".ViaLocalActivity"
+            android:label="@string/title_activity_via_local" >
         </activity>
     </application>
 

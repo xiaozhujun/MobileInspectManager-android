@@ -5,11 +5,19 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <Button
-        android:id="@+id/take"
+        android:id="@+id/takeViaCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/take" />
+        android:text="@string/takeViaCamera" />
+
+    <Button
+        android:id="@+id/takeViaLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/takeViaLocal" />
 
 </RelativeLayout>
