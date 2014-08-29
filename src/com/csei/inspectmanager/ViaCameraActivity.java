@@ -47,11 +47,20 @@ public class ViaCameraActivity extends Activity {
 	private Handler handler;
 	private ProgressDialog progressDialog;
 	private Builder alertDialog;
+	private String diviceNum;
+	private String tagArea;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_via_camera);
+		
+		Intent intent1=this.getIntent();
+		diviceNum=intent1.getStringExtra("diviceNum");
+		tagArea=intent1.getStringExtra("tagArea");
+		
+		
+		
 		String status = Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 			try {
