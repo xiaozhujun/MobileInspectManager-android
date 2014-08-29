@@ -15,6 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	Button writecard;
 	Button uoloadpic;
+	private String userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,8 @@ public class MainActivity extends Activity {
 		Informations userinfo = (Informations) bundle
 				.getSerializable("userinfo");
 		((TextView)findViewById(R.id.textView1)).setText("Hello! "+userinfo.userName);
+		userId=Long.toString(userinfo.id);
+		
 		writecard=(Button) findViewById(R.id.writecard);
 		uoloadpic=(Button) findViewById(R.id.uoloadpic);
 		writecard.setOnClickListener(new OnClickListener() {
@@ -32,6 +35,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent1=new Intent(MainActivity.this, WriteCardActivity.class);
+				intent1.putExtra("userId", userId);
 				startActivity(intent1);
 			}
 		});
@@ -41,6 +45,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent2=new Intent(MainActivity.this, UploadPicActivity.class);
+				intent2.putExtra("userId", userId);
 				startActivity(intent2);
 			}
 		});

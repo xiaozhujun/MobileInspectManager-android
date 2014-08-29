@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,8 +31,9 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.entity.mime.MultipartEntity;
-
+import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 
 import android.util.Log;
 
@@ -238,8 +240,38 @@ public class CasClient
 //        }  
     	return EntityUtils.toString(resEntity);
 	}
+    
+    //发送文件并传参，测试
+    @SuppressWarnings("deprecation")
+	public String doSendFile3(String ServicePath,String FilePath,String userId,String diviceNum,String tagArea) throws ClientProtocolException, IOException {
+    	httpClient.getParams().setParameter(  
+                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);  
+        HttpPost httppost = new HttpPost(ServicePath);  
+        File file = new File(FilePath);
+        MultipartEntity entity = new MultipartEntity();  
+        FileBody fileBody = new FileBody(file);  
+        entity.addPart("filename", fileBody);
+        
+        entity.addPart("userId",StringBody(userId,Charset.forName("UTF-8")));
+        entity.addPart("diviceNum",StringBody(diviceNum, Charset.forName("UTF-8")));
+        entity.addPart("tagArea",StringBody(tagArea, Charset.forName("UTF-8")));
+        
+        
+        httppost.setEntity(entity);  
+        HttpResponse response = httpClient.execute(httppost);
+        HttpEntity resEntity = response.getEntity();  
+//        if (resEntity != null) {  
+//            Log.i("sendfile", EntityUtils.toString(resEntity));  
+//        }  
+    	return EntityUtils.toString(resEntity);
+	}
 
-    public String doGet(String service){
+    private ContentBody StringBody(String userId, Charset forName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String doGet(String service){
         Log.i("cas client doGet url:", service);
         HttpGet httpGet = new HttpGet (service);
         try

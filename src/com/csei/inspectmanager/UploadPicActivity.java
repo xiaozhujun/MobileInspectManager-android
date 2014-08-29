@@ -32,6 +32,7 @@ public class UploadPicActivity extends Activity {
 	private Timer timerDialog;
 	private int MSG_FLAG=1;
 	private int MSG_OVER=2;
+	private String userId;
 	
 	private Handler handler=new Handler(){
 
@@ -52,7 +53,8 @@ public class UploadPicActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		Intent intent=this.getIntent();
+		userId=intent.getStringExtra(userId);
 		
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setTitle("提示");
@@ -126,6 +128,7 @@ public class UploadPicActivity extends Activity {
 			Intent intent3=new Intent(UploadPicActivity.this,ViaCameraActivity.class);
 			intent3.putExtra("diviceNum", deviceNum);
 			intent3.putExtra("tagArea", tagArea);
+			intent3.putExtra("userId", userId);
 			startActivity(intent3);
 		}
 		

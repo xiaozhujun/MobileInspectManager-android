@@ -49,6 +49,7 @@ public class ViaCameraActivity extends Activity {
 	private Builder alertDialog;
 	private String diviceNum;
 	private String tagArea;
+	private String userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class ViaCameraActivity extends Activity {
 		Intent intent1=this.getIntent();
 		diviceNum=intent1.getStringExtra("diviceNum");
 		tagArea=intent1.getStringExtra("tagArea");
+		userId=intent1.getStringExtra(userId);
 		
 		
 		
@@ -199,10 +201,10 @@ public class ViaCameraActivity extends Activity {
 			// TODO Auto-generated method stub
 			Message msg = Message.obtain();
 			try {
-				String result = CasClient.getInstance().doSendFile2(
+				String result = CasClient.getInstance().doSendFile3(
 						getResources().getString(R.string.UP_LOAD_FILE),
 						Environment.getExternalStorageDirectory() + "/image/"
-								+ name);
+								+ name, userId, diviceNum, tagArea);
 				int code = Integer.parseInt((new JSONObject(result)
 						.getJSONObject("code")).toString());
 				if (code == 200) {
