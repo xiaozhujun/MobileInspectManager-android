@@ -1,8 +1,9 @@
-package com.cesi.inspectmanager;
+package com.csei.inspectmanager;
 
 
 
-import com.cesi.util.Informations;
+import com.cesi.inspectmanager.R;
+import com.csei.util.Informations;
 
 import android.app.Activity;
 import android.content.Intent;

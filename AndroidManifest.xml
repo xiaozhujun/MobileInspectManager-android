@@ -29,7 +29,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".LoginActivity"
+            android:name="com.csei.inspectmanager.LoginActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,24 +38,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.csei.inspectmanager.MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".WriteCardActivity"
+            android:name="com.csei.inspectmanager.WriteCardActivity"
             android:label="@string/title_activity_write_card" >
         </activity>
         <activity
-            android:name=".UploadPicActivity"
+            android:name="com.csei.inspectmanager.UploadPicActivity"
             android:label="@string/title_activity_upload_pic" >
         </activity>
         <activity
-            android:name=".ViaCameraActivity"
+            android:name="com.csei.inspectmanager.ViaCameraActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_via_camera" >
         </activity>
         <activity
-            android:name=".ViaLocalActivity"
+            android:name="com.csei.inspectmanager.ViaLocalActivity"
             android:label="@string/title_activity_via_local" >
         </activity>
     </application>

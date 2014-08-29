@@ -1,4 +1,4 @@
-package com.cesi.inspectmanager;
+package com.csei.inspectmanager;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,8 +9,9 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.cesi.client.CasClient;
-import com.cesi.inspectmanager.ViaCameraActivity.MyThread;
+import com.cesi.inspectmanager.R;
+import com.csei.client.CasClient;
+import com.csei.inspectmanager.ViaCameraActivity.MyThread;
 
 import android.R.integer;
 import android.app.Activity;
