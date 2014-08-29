@@ -58,6 +58,10 @@
             android:name="com.csei.inspectmanager.ViaLocalActivity"
             android:label="@string/title_activity_via_local" >
         </activity>
+        <activity android:name="com.csei.inspectmanager.ShowFileActivity"/>
+        <activity android:name="com.csei.inspectmanager.WriteActivity"/>
+        <service android:name="com.csei.service.RFIDService"/>
+        
     </application>
 
 </manifest>
