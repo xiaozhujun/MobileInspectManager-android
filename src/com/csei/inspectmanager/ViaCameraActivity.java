@@ -202,7 +202,7 @@ public class ViaCameraActivity extends Activity {
 			Message msg = Message.obtain();
 			try {
 				String result = CasClient.getInstance().doSendFile3(
-						getResources().getString(R.string.UP_LOAD_FILE),
+						getResources().getString(R.string.UP_LOAD_FILE_LOCAL),
 						Environment.getExternalStorageDirectory() + "/image/"
 								+ name, userId, diviceNum, tagArea);
 				int code = Integer.parseInt((new JSONObject(result)
