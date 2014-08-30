@@ -73,7 +73,7 @@ public class UploadPicActivity extends Activity {
 				progressDialog.show();
 				timerDialog=new Timer();
 				timerDialog.schedule(new TimerTask() {
-					
+					 
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
