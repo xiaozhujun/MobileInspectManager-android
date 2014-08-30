@@ -19,7 +19,7 @@
     <string name="title_activity_via_camera">从相机上传</string>
     <string name="upload">上传</string>
     <string name="cancel">取消</string>
-    <string name="UP_LOAD_FILE">http://www.cseicms.com/inspectManagement/rs/inspectResult/upload</string>
+    <string name="UP_LOAD_FILE">http://www.cseicms.com/inspectManagement/rs/adminUpload/upload</string>
     <string name="title_activity_via_local">从本地上传</string>
 
 </resources>

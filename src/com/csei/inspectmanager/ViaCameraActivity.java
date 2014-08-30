@@ -59,7 +59,7 @@ public class ViaCameraActivity extends Activity {
 		Intent intent1=this.getIntent();
 		diviceNum=intent1.getStringExtra("diviceNum");
 		tagArea=intent1.getStringExtra("tagArea");
-		userId=intent1.getStringExtra(userId);
+		userId=intent1.getStringExtra("userId");
 		
 		
 		

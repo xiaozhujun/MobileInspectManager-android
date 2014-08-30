@@ -20,6 +20,7 @@ import android.app.AlertDialog.Builder;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -48,11 +49,16 @@ public class ViaLocalActivity extends Activity {
 	private String name;
 	private Handler handler;
 	private ListView listview;
+	private String userId;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_via_local);
+		
+		Intent intent=this.getIntent();
+		userId=intent.getStringExtra("userId");
+		
 		String status=Environment.getExternalStorageState();
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 			try {

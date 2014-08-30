@@ -54,7 +54,7 @@ public class UploadPicActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		Intent intent=this.getIntent();
-		userId=intent.getStringExtra(userId);
+		userId=intent.getStringExtra("userId");
 		
 		progressDialog = new ProgressDialog(this);
 		progressDialog.setTitle("提示");
@@ -70,18 +70,6 @@ public class UploadPicActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent intent1=new Intent(UploadPicActivity.this, ViaCameraActivity.class);
-				startActivity(intent1);
-			}
-		});
-		
-		bt2=(Button) findViewById(R.id.takeViaLocal);
-		bt2.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
 				progressDialog.show();
 				timerDialog=new Timer();
 				timerDialog.schedule(new TimerTask() {
@@ -95,10 +83,23 @@ public class UploadPicActivity extends Activity {
 						handler.sendMessage(msg);
 					}
 				}, 7000);
-				Intent intent2=new Intent(UploadPicActivity.this, RFIDService.class);
-				intent2.putExtra("cardType", cardType);
-				intent2.putExtra("activity", activity);
-				startService(intent2);
+				Intent intent1=new Intent(UploadPicActivity.this, RFIDService.class);
+				intent1.putExtra("cardType", cardType);
+				intent1.putExtra("activity", activity);
+				startService(intent1);
+			}
+		});
+		
+		bt2=(Button) findViewById(R.id.takeViaLocal);
+		bt2.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				
+				Intent intent2=new Intent(UploadPicActivity.this, ViaLocalActivity.class);
+				startActivity(intent2);
 			}
 		});
 	}
