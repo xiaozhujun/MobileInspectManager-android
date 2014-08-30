@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -87,6 +88,10 @@ public class UploadPicActivity extends Activity {
 				intent1.putExtra("cardType", cardType);
 				intent1.putExtra("activity", activity);
 				startService(intent1);
+				MyReceiver myReceiver=new MyReceiver();
+				IntentFilter filter=new IntentFilter();
+				filter.addAction(activity);
+				registerReceiver(myReceiver, filter);
 			}
 		});
 		
@@ -112,27 +117,28 @@ public class UploadPicActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			Listable listable=intent.getParcelableExtra("listable");
-			if (listable==null) {
-				Toast.makeText(UploadPicActivity.this, "读卡失败", Toast.LENGTH_SHORT).show();
-				return;
-			}else if (!(listable instanceof Tag)) {
-				Toast.makeText(UploadPicActivity.this, "卡片类型错误", Toast.LENGTH_SHORT).show();
+			if (intent.getAction()==activity) {
+				Listable listable=intent.getParcelableExtra("listable");
+				if (listable==null) {
+					Toast.makeText(UploadPicActivity.this, "读卡失败", Toast.LENGTH_SHORT).show();
+					return;
+				}else if (!(listable instanceof Tag)) {
+					Toast.makeText(UploadPicActivity.this, "卡片类型错误", Toast.LENGTH_SHORT).show();
+				}
+				Tag tag=(Tag) listable;
+				progressDialog.cancel();
+				timerDialog.cancel();
+				
+				deviceNum=tag.getDeviceNum();
+				tagArea=tag.getTagArea();
+				
+				Intent intent3=new Intent(UploadPicActivity.this,ViaCameraActivity.class);
+				intent3.putExtra("diviceNum", deviceNum);
+				intent3.putExtra("tagArea", tagArea);
+				intent3.putExtra("userId", userId);
+				startActivity(intent3);
 			}
-			Tag tag=(Tag) listable;
-			progressDialog.cancel();
-			timerDialog.cancel();
-			
-			deviceNum=tag.getDeviceNum();
-			tagArea=tag.getTagArea();
-			
-			Intent intent3=new Intent(UploadPicActivity.this,ViaCameraActivity.class);
-			intent3.putExtra("diviceNum", deviceNum);
-			intent3.putExtra("tagArea", tagArea);
-			intent3.putExtra("userId", userId);
-			startActivity(intent3);
-		}
-		
+			}
 	}
 	
 }

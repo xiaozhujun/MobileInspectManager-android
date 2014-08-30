@@ -20,6 +20,6 @@
     <string name="upload">上传</string>
     <string name="cancel">取消</string>
     <string name="UP_LOAD_FILE">http://www.cseicms.com/inspectManagement/rs/adminUpload/upload</string>
-    <string name="UP_LOAD_FILE_LOCAL">172.18.91.1:8080</string>
+    <string name="UP_LOAD_FILE_LOCAL">172.18.91.1:8080/inspectManagement/rs/adminUpload/upload</string>
     <string name="title_activity_via_local">从本地上传</string>
 </resources>
