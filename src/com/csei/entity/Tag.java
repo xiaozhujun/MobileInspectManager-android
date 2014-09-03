@@ -3,9 +3,9 @@ package com.csei.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.csei.exception.ArgumentException;
 
@@ -40,7 +40,7 @@ public class Tag implements Listable{
 			deviceNum = d[3];
 			tagAreaNum = d[4];
 		}else{
-			throw new ArgumentException("²ÎÊı²»ÕıÈ·");
+			throw new ArgumentException("å‚æ•°ä¸æ­£ç¡®");
 		}
 	}
 
@@ -58,7 +58,7 @@ public class Tag implements Listable{
 	}
 	
 	@Override
-	public void setByList(List<String> params) throws ArgumentException{
+	public void setByList(List<String> params){
 		if(params.size()>3){
 			this.tagArea = params.get(1);
 			this.tagAreaNum = params.get(2);
@@ -67,7 +67,7 @@ public class Tag implements Listable{
 				this.deviceNum+=params.get(i);
 			}
 		}else{
-			throw new ArgumentException("¹¹Ôì²ÎÊıÕıÈ·");
+			Log.e("org.whut.Tag", "å‚æ•°ä¸æ­£ç¡®ï¼");
 		}
 	}
 	

@@ -1,4 +1,4 @@
-package com.csei.client;
+package com.cesi.client;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -24,19 +24,22 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeaderValueParser;
+import org.apache.http.message.BasicHeaderValueFormatter;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
 import android.util.Log;
 
+@SuppressWarnings("deprecation")
 public class CasClient
 {
     private static final String CAS_LOGIN_URL_PART = "tickets";
@@ -60,7 +63,8 @@ public class CasClient
         return client;
     }
 
-    private CasClient (String casBaseUrl)
+    @SuppressWarnings("static-access")
+	private CasClient (String casBaseUrl)
     {
         this.httpClient = getHttpClient();
         this.casBaseURL = casBaseUrl;
@@ -223,7 +227,7 @@ public class CasClient
     }
 
 
-    @SuppressWarnings("deprecation")
+
 	public String doSendFile2(String ServicePath,String FilePath) throws ClientProtocolException, IOException {
     	httpClient.getParams().setParameter(  
                 CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);  
@@ -241,37 +245,39 @@ public class CasClient
     	return EntityUtils.toString(resEntity);
 	}
     
-    //发送文件并传参，测试
-    @SuppressWarnings("deprecation")
-	public String doSendFile3(String ServicePath,String FilePath,String userId,String diviceNum,String tagArea) throws ClientProtocolException, IOException {
-    	httpClient.getParams().setParameter(  
-                CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);  
-        HttpPost httppost = new HttpPost(ServicePath);  
-        File file = new File(FilePath);
-        MultipartEntity entity = new MultipartEntity();  
-        FileBody fileBody = new FileBody(file);  
-        entity.addPart("filename", fileBody);
-        
-        entity.addPart("userId",StringBody(userId,Charset.forName("UTF-8")));
-        entity.addPart("diviceNum",StringBody(diviceNum, Charset.forName("UTF-8")));
-        entity.addPart("tagArea",StringBody(tagArea, Charset.forName("UTF-8")));
-        
-        
-        httppost.setEntity(entity);  
-        HttpResponse response = httpClient.execute(httppost);
-        HttpEntity resEntity = response.getEntity();  
-//        if (resEntity != null) {  
-//            Log.i("sendfile", EntityUtils.toString(resEntity));  
-//        }  
-    	return EntityUtils.toString(resEntity);
+    
+	synchronized public String doSendImage(String service,String filePath,HashMap<String,String> params)throws ClientProtocolException, IOException{
+		httpClient.getParams().setParameter(  
+				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1); 
+		HttpPost httppost = new HttpPost(service);
+		File file = new File(filePath);
+		MultipartEntity entity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE,
+	               null, Charset.forName("UTF-8"));
+		FileBody imageBody = new FileBody(file);
+		entity.addPart("filename",imageBody);
+		
+		StringBody userId = new StringBody(params.get("userId"));
+		StringBody deviceNum = new StringBody(params.get("deviceNum"));
+		StringBody tagArea = new StringBody(params.get("tagArea"));
+		
+		Log.i("userId", userId.toString());
+		Log.i("deviceNum", deviceNum.toString());
+		Log.i("tagArea", tagArea.toString());
+		
+		entity.addPart("userId",userId);
+		entity.addPart("deviceNumber",deviceNum);
+		entity.addPart("inspectAreaName",tagArea);
+	
+		httppost.setEntity(entity);  
+		HttpResponse response = httpClient.execute(httppost);
+		HttpEntity resEntity = response.getEntity();  
+		return EntityUtils.toString(resEntity);
 	}
+    
+    
+    
 
-    private ContentBody StringBody(String userId, Charset forName) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public String doGet(String service){
+    public String doGet(String service){
         Log.i("cas client doGet url:", service);
         HttpGet httpGet = new HttpGet (service);
         try
@@ -325,38 +331,40 @@ public class CasClient
     }
     
     synchronized public String doPost(String service,HashMap<String,Object> params){
-        Log.i("cas client doPost url:", service);
-        HttpPost httpPost = new HttpPost (service);
-        try
-        {
-            List <NameValuePair> nvps = new ArrayList <NameValuePair> ();
-            for(String key:params.keySet()){
-                nvps.add(new BasicNameValuePair (key, (String) params.get(key)));
-            }
-            httpPost.setEntity(new UrlEncodedFormEntity(nvps,HTTP.UTF_8));
-            
+		Log.i("cas client doPost url:", service);
+		HttpPost httpPost = new HttpPost (service);
+		try
+		{
+			List <NameValuePair> nvps = new ArrayList <NameValuePair> ();
+			for(String key:params.keySet()){
+				nvps.add(new BasicNameValuePair (key, (String) params.get(key)));
+			}
+			httpPost.setEntity(new UrlEncodedFormEntity(nvps,HTTP.UTF_8));
 
-            HttpResponse response = httpClient.execute(httpPost);
-            String responseBody = getResponseBody(response);
-            switch (response.getStatusLine().getStatusCode())
-            {
-                case 200:
-                {
-                    Log.i("cas client doPost response:", responseBody);
-                    return responseBody;
-                }
-                default:
-                    break;
-            }
+			synchronized (httpClient) {
+				HttpResponse response = httpClient.execute(httpPost);
+				String responseBody = getResponseBody(response);
+				switch (response.getStatusLine().getStatusCode())
+				{
+				case 200:
+				{
+					Log.i("cas client doPost response:", responseBody);
+					return responseBody;
+				}
+				default:
+					break;
+				}
+			}
 
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
 
-        return null;
-    }
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return null;
+	}
     
   //����POSTû�д���������
    synchronized public String doPostNoParams(String service){

@@ -8,7 +8,6 @@ import java.util.TimerTask;
 import com.csei.entity.Employer;
 import com.csei.entity.Listable;
 import com.csei.entity.Tag;
-import com.csei.exception.ArgumentException;
 import com.csei.util.CommonUtils;
 
 import com.android.hdhe.nfc.NFCcmdManager;
@@ -98,7 +97,7 @@ public class RFIDService extends Service {
 			return Integer.parseInt(lenString);
 		}
 		
-		private Listable readListable() throws ArgumentException{
+		private Listable readListable(){
 			Listable result = null;
 			int len = getListableLength();
 			List<String> list = new ArrayList<String>();

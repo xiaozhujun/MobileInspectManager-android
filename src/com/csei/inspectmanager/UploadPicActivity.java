@@ -12,6 +12,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,9 +32,11 @@ public class UploadPicActivity extends Activity {
 	private String tagArea;
 	private ProgressDialog progressDialog;
 	private Timer timerDialog;
+	private Timer timeThread;
 	private int MSG_FLAG=1;
 	private int MSG_OVER=2;
 	private String userId;
+	private MyReceiver myReceiver;
 	
 	private Handler handler=new Handler(){
 
@@ -88,7 +91,7 @@ public class UploadPicActivity extends Activity {
 				intent1.putExtra("cardType", cardType);
 				intent1.putExtra("activity", activity);
 				startService(intent1);
-				MyReceiver myReceiver=new MyReceiver();
+				myReceiver=new MyReceiver();
 				IntentFilter filter=new IntentFilter();
 				filter.addAction(activity);
 				registerReceiver(myReceiver, filter);
@@ -110,7 +113,38 @@ public class UploadPicActivity extends Activity {
 	}
 	
 	
-	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		timeThread = new Timer();
+		timeThread.schedule(new TimerTask() {
+			@Override
+			public void run() {
+//				String timeStr = Tools.getTime();
+				Message msg = new Message();
+				msg.what = MSG_FLAG;
+				handler.sendMessage(msg);
+			}
+		}, 0 , 1000);
+		super.onResume();
+	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		unregisterReceiver(myReceiver);  //卸载广播接收者
+		super.onPause();
+		timeThread.cancel();
+		Log.e("M1CARDPAUSE", "PAUSE");  	
+	}
+	@Override
+	protected void onDestroy() {
+		// TODO Auto-generated method stub
+		Intent stopService = new Intent();
+		stopService.setAction("com.example.service.DeviceService");
+		stopService.putExtra("stopflag", true);
+		sendBroadcast(stopService);  //给服务发送广播,令服务停止
+		super.onDestroy();
+	}
 	
 	private class MyReceiver extends BroadcastReceiver{
 
@@ -133,7 +167,7 @@ public class UploadPicActivity extends Activity {
 				tagArea=tag.getTagArea();
 				
 				Intent intent3=new Intent(UploadPicActivity.this,ViaCameraActivity.class);
-				intent3.putExtra("diviceNum", deviceNum);
+				intent3.putExtra("deviceNum", deviceNum);
 				intent3.putExtra("tagArea", tagArea);
 				intent3.putExtra("userId", userId);
 				startActivity(intent3);

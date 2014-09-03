@@ -3,12 +3,11 @@ package com.csei.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
-import com.csei.exception.ArgumentException;
-
+	
 public class Employer implements Listable{
 	private final String cardType = "0x01";
 	private String role;
@@ -38,21 +37,33 @@ public class Employer implements Listable{
 		this.number = p.readString();
 	}
 	
+	public Employer(String... args)
+	{
+		if (args.length!=4) {
+			Log.i("employer", "employer锟斤拷锟斤拷锟斤拷锟皆ｏ拷");
+		}
+		else 
+		{
+			this.role =args[0];
+			this.roleNum = args[1];
+			this.name = args[2];
+			this.number = args[3];
+		}
 
-	public Employer(String data) throws ArgumentException{
+	}
+
+	public Employer(String data){
 		if(data!=null){
 			String[] d = data.split(",");
 			name = d[1];
 			number = d[2];
 			role = d[3];
 			roleNum = d[4];
-				
 		}else{
-			throw new ArgumentException("参数不正确");
+			
 		}
 	}
 
-	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(role);
 		dest.writeString(roleNum);
@@ -60,19 +71,17 @@ public class Employer implements Listable{
 		dest.writeString(number);
 	}
 	
-	@Override
-	public void setByList(List<String> params) throws ArgumentException{
+	public void setByList(List<String> params){
 		if(params.size()==PROPERTY_COUNT){
 			this.role = params.get(1);
 			this.roleNum = params.get(2);
 			this.name = params.get(3);
 			this.number = params.get(4);
 		}else{
-			throw new ArgumentException("构造参数正确");
+		
 		}
 	}
 	
-	@Override
 	public int getPropertyCount(){
 		return PROPERTY_COUNT;
 	}
@@ -89,7 +98,6 @@ public class Employer implements Listable{
 		return params;
 	}
 	
-	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -98,7 +106,7 @@ public class Employer implements Listable{
 	public String getCardType() {
 		return cardType;
 	}
-
+	
 	public String getRole() {
 		return role;
 	}

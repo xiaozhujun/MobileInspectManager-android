@@ -3,8 +3,8 @@ package com.csei.inspectmanager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.cesi.client.CasClient;
 import com.cesi.inspectmanager.R;
-import com.csei.client.CasClient;
 import com.csei.util.Informations;
 
 import android.annotation.SuppressLint;
@@ -141,13 +141,13 @@ public class LoginActivity extends Activity {
 		public void run() {
 			final boolean loginresult = CasClient.getInstance().login(name,
 					pswords,
-					getResources().getString(R.string.LOGIN_SECURITY_CHECK));
+					getResources().getString(R.string.LOGIN_SECURITY_CHECK_LOCAL));
 			if(loginresult)
 			Log.i("tag1", "1q");
 			if (loginresult) {
 
 				String msg1 = CasClient.getInstance().doGet(
-						getResources().getString(R.string.USER_GETIMF));
+						getResources().getString(R.string.USER_GETIMF_LOCAL));
 				try {
 					jsonObject = (new JSONObject(msg1)).getJSONObject("data");
 					number1 = jsonObject.getString("number");

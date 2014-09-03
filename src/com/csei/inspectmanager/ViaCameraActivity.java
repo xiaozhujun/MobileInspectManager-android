@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.json.JSONObject;
 
+import com.cesi.client.CasClient;
 import com.cesi.inspectmanager.R;
-import com.csei.client.CasClient;
 import com.csei.inspectmanager.LoginActivity.MyThread;
 
 import android.R.integer;
@@ -30,6 +31,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,9 +49,10 @@ public class ViaCameraActivity extends Activity {
 	private Handler handler;
 	private ProgressDialog progressDialog;
 	private Builder alertDialog;
-	private String diviceNum;
+	private String deviceNum;
 	private String tagArea;
 	private String userId;
+	private String test="sss";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class ViaCameraActivity extends Activity {
 		setContentView(R.layout.activity_via_camera);
 		
 		Intent intent1=this.getIntent();
-		diviceNum=intent1.getStringExtra("diviceNum");
+		deviceNum=intent1.getStringExtra("deviceNum");
 		tagArea=intent1.getStringExtra("tagArea");
 		userId=intent1.getStringExtra("userId");
 		
@@ -116,12 +119,10 @@ public class ViaCameraActivity extends Activity {
 				case 0:
 					progressDialog.dismiss();
 					alertDialog.setTitle("提示").setMessage("上传成功").show();
-					finish();
 					break;
 				case 1:
 					progressDialog.dismiss();
 					alertDialog.setTitle("提示").setMessage("上传失败，请稍后重试").show();
-					finish();
 					break;
 				case 2:
 					progressDialog.setProgress(msg.arg1);
@@ -164,7 +165,7 @@ public class ViaCameraActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						// TODO Auto-generated method stub
-						(new Thread(new MyThread())).start();
+						new Thread(new MyThread()).start();
 						progressDialog.show();
 					}
 				});
@@ -199,12 +200,17 @@ public class ViaCameraActivity extends Activity {
 		@Override
 		public void run() {
 			// TODO Auto-generated method stub
-			Message msg = Message.obtain();
+			Message msg = Message.obtain();			
+			HashMap<String, String> params=new HashMap<String, String>();
+			params.put("userId", userId);
+			params.put("deviceNum", deviceNum);
+			params.put("tagArea", tagArea);
 			try {
-				String result = CasClient.getInstance().doSendFile3(
+				String result = CasClient.getInstance().doSendImage(
 						getResources().getString(R.string.UP_LOAD_FILE_LOCAL),
 						Environment.getExternalStorageDirectory() + "/image/"
-								+ name, userId, diviceNum, tagArea);
+								+ name, params);
+				Log.i("asdasd", result);
 				int code = Integer.parseInt((new JSONObject(result)
 						.getJSONObject("code")).toString());
 				if (code == 200) {
@@ -217,6 +223,8 @@ public class ViaCameraActivity extends Activity {
 				msg.what = 1;
 				e.printStackTrace();
 			}
+			handler.sendMessage(msg);
+			
 		}
 
 	}

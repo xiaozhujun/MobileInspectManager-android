@@ -9,8 +9,8 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.cesi.client.CasClient;
 import com.cesi.inspectmanager.R;
-import com.csei.client.CasClient;
 import com.csei.inspectmanager.ViaCameraActivity.MyThread;
 
 import android.R.integer;
