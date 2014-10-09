@@ -36,6 +36,7 @@ public class WriteCardActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_write_card);
+		
 		writeTagsButton=(Button) findViewById(R.id.writeTags);
 		writeEmployerButton=(Button) findViewById(R.id.writeEmployer);
 		
